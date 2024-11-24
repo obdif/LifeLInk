@@ -30,7 +30,7 @@ export default function SignUp() {
       const response = await axios.post('https://lifelink-ordc.onrender.com/hospital/create', formData);
       setSuccess('Hospital registered successfully! Registration ID: ' + response.data.regId);
       toast.success('Hospital registered successfully!', { autoClose: 5000 });
-      navigate('/login'); // Redirect to SignIn page after success
+      navigate('/signin'); 
     } catch (err) {
       const message = err.response?.data?.message || 'Failed to register the hospital.';
       setError(message); 
