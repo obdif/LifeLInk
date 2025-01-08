@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import maleNurse from '../assets/male-nurse.jpg';
+import femaleDoctor from '../assets/patient-data.jpg';
 
 function HomePage() {
   const navigate = useNavigate();
@@ -11,12 +13,15 @@ function HomePage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [fullName, setFullName] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(true); // Initial loading state
 
+  // Simulate authentication check
   useEffect(() => {
     const token = localStorage.getItem('jwtToken');
     if (token) {
       setIsAuthenticated(true);
     }
+    setTimeout(() => setIsLoading(false), 1000); // Simulate loading time
   }, []);
 
   const handleFileChange = (event) => {
@@ -34,38 +39,59 @@ function HomePage() {
     e.preventDefault();
 
     if (!fullName.trim()) {
-      toast.error("Please enter a patient name to search.");
-      return;  // Prevent search if fullName is empty
+      toast.error('Please enter a patient name to search.');
+      return;
     }
+
+    setIsLoading(true); // Start loading state for search
 
     try {
       const encodedFullName = encodeURIComponent(fullName.trim());
-      navigate(`/search-results?fullName=${encodedFullName}`);
+      // Simulate API call or navigation with loading
+      setTimeout(() => {
+        navigate(`/search-results?fullName=${encodedFullName}`);
+        setIsLoading(false); // Stop loading once navigation is complete
+      }, 1000);
     } catch (err) {
       console.error('Search error:', err);
       setError('An error occurred while searching. Please try again.');
+      setIsLoading(false); // Stop loading even if there is an error
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-indigo-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
       <ToastContainer />
-      <header className="border-b bg-white/50 backdrop-blur-sm fixed w-screen top-0 z-50">
-        <div className="container mx-full px-20 py-4 flex justify-between items-center">
-          <Link to="/" className="flex items-center space-x-2">
-            <Heart className="h-6 w-6 text-indigo-600" />
-            <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
-              LifeLink
-            </span>
-          </Link>
+      <header className="border-b bg-white/50 backdrop-blur-sm fixed w-full top-0 z-50 ">
+  <div className="container mx-auto px-4 md:px-20 py-3 flex items-center justify-between">
+    {/* Logo */}
+    <Link to="/" className="flex items-center space-x-2">
+      <Heart className="h-5 w-5 md:h-6 md:w-6 text-indigo-600" />
+      <span className="text-lg md:text-2xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
+        LifeLink
+      </span>
+    </Link>
 
-          <Link to={isAuthenticated ? "/create-patient" : "/signup"}>
-            <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-full font-medium transition-all">
-              {isAuthenticated ? "Create Patient" : "Register"}
-            </button>
-          </Link>
-        </div>
-      </header>
+    {/* Buttons */}
+    <Link to={isAuthenticated ? "/create-patient" : "/signup"}>
+      <button className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm md:text-base px-10 py-2 md:px-6 md:py-3 rounded-full font-medium transition-all">
+        {isAuthenticated ? "Create Patient" : "Register"}
+      </button>
+    </Link>
+  </div>
+</header>
+
 
       <main className="container mx-auto  px-4 pt-5 mt-20 pb-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center ">
@@ -75,20 +101,33 @@ function HomePage() {
               Revolutionizing Healthcare Access and Emergency Care by Connecting Hospitals.
             </h1>
             <div className="space-y-4 text-lg text-gray-600">
-              <p>Join LifeLink to connect with healthcare professionals, hospitals, and patients for faster, more efficient care.</p>
+              <p>
+                Join LifeLink to connect with healthcare professionals, hospitals, and patients for faster, more efficient care.
+              </p>
               <p>Share medical insights, get expert advice, and stay up to date on important health information.</p>
-              <p>LifeLink is here to help streamline patient care, reduce delays, and improve outcomes during emergencies.</p>
+              <p>
+                LifeLink is here to help streamline patient care, reduce delays, and improve outcomes during emergencies.
+              </p>
             </div>
             <div className="flex space-x-4">
-              <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-full font-medium transition-all flex items-center space-x-2">
-                <Plus className="h-5 w-5" />
-                <span>Join Now</span>
-              </button>
-              <button className="border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-50 px-8 py-3 rounded-full font-medium transition-all">
-                Learn More
-              </button>
+              <Link to="/signin">
+                <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-full font-medium transition-all flex items-center space-x-2 md:text-base text-sm md:py-3 md:px-6">
+                  <Plus className="h-5 w-5" />
+                  <span>Join Now</span>
+                </button>
+              </Link>
+              <a
+                href="/learnmore"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button className="border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-50 px-8 py-3 rounded-full font-medium transition-all md:text-base text-sm ">
+                  Learn More
+                </button>
+              </a>
             </div>
           </div>
+
 
           {/* File Upload and Search Section */}
           <div className="relative md:order-2 order-1">
@@ -156,7 +195,110 @@ function HomePage() {
             </div>
           </div>
         </div>
+
+        {/* About Section */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-6 lg:px-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                What is LifeLink?
+              </h2>
+              <p className="text-lg text-gray-600 leading-relaxed">
+                LifeLink is a comprehensive hospital management and patient care platform.
+                Our mission is to bridge the gap between hospitals, healthcare professionals, and patients to ensure faster, more efficient emergency care and healthcare access.
+                LifeLink helps in streamlining medical processes like appointment bookings, diagnostic result sharing, and communication between hospitals for better outcomes.
+              </p>
+            </div>
+            <img
+              src={maleNurse}
+              alt="About LifeLink"
+              className="rounded-lg shadow-lg"
+            />
+          </div>
+        </section>
+
       </main>
+
+
+      {/* Features Section */}
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-50">
+        <div className="container mx-auto px-6 lg:px-20 text-center">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8">Key Features</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="p-6 bg-white rounded-lg shadow">
+              <h3 className="text-xl font-semibold text-indigo-600">Easy Access to Patient Data</h3>
+              <p className="text-gray-600 mt-4">
+                Streamline healthcare processes with centralized access to patient records, enabling faster and more accurate decision-making.
+              </p>
+            </div>
+            <div className="p-6 bg-white rounded-lg shadow">
+              <h3 className="text-xl font-semibold text-indigo-600">Emergency Care</h3>
+              <p className="text-gray-600 mt-4">
+                Share diagnostic and medical records across hospitals to save time in emergencies.
+              </p>
+            </div>
+            <div className="p-6 bg-white rounded-lg shadow">
+              <h3 className="text-xl font-semibold text-indigo-600">Doctor & Patient Portals</h3>
+              <p className="text-gray-600 mt-4">
+                Separate portals for doctors and patients for improved communication and personalized healthcare.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* Benefits Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-6 lg:px-20 text-center">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8">Why Choose LifeLink?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="space-y-6 text-left">
+              <p className="text-lg text-gray-600">
+                🌟 <b>Faster Emergency Response:</b> Our platform reduces delays in sharing diagnostic results, ensuring critical care is never held back.
+              </p>
+              <p className="text-lg text-gray-600">
+                🌟 <b>Improved Patient Outcomes:</b> Stay connected with healthcare professionals for expert advice and quicker decisions.
+              </p>
+              <p className="text-lg text-gray-600">
+                🌟 <b>Data Privacy & Security:</b> With state-of-the-art encryption, patient data is always safe.
+              </p>
+            </div>
+            <img
+              src={femaleDoctor}
+              alt="Benefits of LifeLink"
+              className="rounded-lg shadow-lg"
+            />
+          </div>
+        </div>
+      </section>
+
+
+      {/* Call-to-Action Section */}
+      <section className="bg-indigo-600 text-white py-16">
+        <div className="container mx-auto px-6 lg:px-20 text-center">
+          <h2 className="text-3xl font-bold mb-6">Ready to Revolutionize Healthcare?</h2>
+          <p className="text-lg">
+            Join LifeLink today and experience seamless healthcare access and improved patient outcomes.
+          </p>
+          <div className="mt-6 flex justify-center space-x-4">
+            <Link to="/signin">
+              <button className="bg-white text-indigo-600 px-6 py-3 rounded-full font-medium hover:bg-gray-100">
+                Get Started
+              </button>
+            </Link>
+            <a
+              href="/learnmore"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <button className="bg-transparent border-2 border-white text-white px-6 py-3 rounded-full font-medium hover:bg-white hover:text-indigo-600">
+                Learn More
+              </button>
+            </a>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
