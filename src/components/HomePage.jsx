@@ -6,6 +6,11 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import maleNurse from '../assets/male-nurse.jpg';
 import femaleDoctor from '../assets/patient-data.jpg';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+
+
 
 function HomePage() {
   const navigate = useNavigate();
@@ -23,6 +28,14 @@ function HomePage() {
     }
     setTimeout(() => setIsLoading(false), 1000); // Simulate loading time
   }, []);
+
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1200,
+    });
+  }, []);
+
 
   const handleFileChange = (event) => {
     const file = event.target.files?.[0];
@@ -73,28 +86,28 @@ function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
       <ToastContainer />
-      <header className="border-b bg-white/50 backdrop-blur-sm fixed w-full top-0 z-50 ">
-  <div className="container mx-auto px-4 md:px-20 py-3 flex items-center justify-between">
-    {/* Logo */}
-    <Link to="/" className="flex items-center space-x-2">
-      <Heart className="h-5 w-5 md:h-6 md:w-6 text-indigo-600" />
-      <span className="text-lg md:text-2xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
-        LifeLink
-      </span>
-    </Link>
+      <header className="border-b bg-white/50 backdrop-blur-sm fixed w-full top-0 z-50 " data-aos="fade-up">
+        <div className="container mx-auto px-4 md:px-20 py-3 flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2">
+            <Heart className="h-5 w-5 md:h-6 md:w-6 text-indigo-600" />
+            <span className="text-lg md:text-2xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
+              LifeLink
+            </span>
+          </Link>
 
-    {/* Buttons */}
-    <Link to={isAuthenticated ? "/create-patient" : "/signup"}>
-      <button className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm md:text-base px-10 py-2 md:px-6 md:py-3 rounded-full font-medium transition-all">
-        {isAuthenticated ? "Create Patient" : "Register"}
-      </button>
-    </Link>
-  </div>
-</header>
+          {/* Buttons */}
+          <Link to={isAuthenticated ? "/create-patient" : "/signup"}>
+            <button className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm md:text-base px-10 py-2 md:px-6 md:py-3 rounded-full font-medium transition-all">
+              {isAuthenticated ? "Create Patient" : "Register"}
+            </button>
+          </Link>
+        </div>
+      </header>
 
 
       <main className="container mx-auto  px-4 pt-5 mt-20 pb-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center ">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center " data-aos="fade-up">
           {/* Text Content Section */}
           <div className="space-y-6 md:order-1 order-2">
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
@@ -197,7 +210,7 @@ function HomePage() {
         </div>
 
         {/* About Section */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white" data-aos="flip-left">
           <div className="container mx-auto px-6 lg:px-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -221,7 +234,7 @@ function HomePage() {
 
 
       {/* Features Section */}
-      <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-50">
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-50" data-aos="fade-up">
         <div className="container mx-auto px-6 lg:px-20 text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-8">Key Features</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -254,13 +267,13 @@ function HomePage() {
           <h2 className="text-3xl font-bold text-gray-900 mb-8">Why Choose LifeLink?</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div className="space-y-6 text-left">
-              <p className="text-lg text-gray-600">
+              <p className="text-lg text-gray-600" data-aos="fade-up-right">
                 🌟 <b>Faster Emergency Response:</b> Our platform reduces delays in sharing diagnostic results, ensuring critical care is never held back.
               </p>
-              <p className="text-lg text-gray-600">
+              <p className="text-lg text-gray-600" data-aos="fade-up-right">
                 🌟 <b>Improved Patient Outcomes:</b> Stay connected with healthcare professionals for expert advice and quicker decisions.
               </p>
-              <p className="text-lg text-gray-600">
+              <p className="text-lg text-gray-600" data-aos="fade-up-right">
                 🌟 <b>Data Privacy & Security:</b> With state-of-the-art encryption, patient data is always safe.
               </p>
             </div>
@@ -268,6 +281,7 @@ function HomePage() {
               src={femaleDoctor}
               alt="Benefits of LifeLink"
               className="rounded-lg shadow-lg"
+              data-aos="fade-up-left"
             />
           </div>
         </div>
@@ -275,7 +289,7 @@ function HomePage() {
 
 
       {/* Call-to-Action Section */}
-      <section className="bg-indigo-600 text-white py-16">
+      <section className="bg-indigo-600 text-white py-16" data-aos="fade-up">
         <div className="container mx-auto px-6 lg:px-20 text-center">
           <h2 className="text-3xl font-bold mb-6">Ready to Revolutionize Healthcare?</h2>
           <p className="text-lg">
