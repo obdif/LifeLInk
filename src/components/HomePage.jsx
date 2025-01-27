@@ -97,7 +97,7 @@ function HomePage() {
           </Link>
 
           {/* Buttons */}
-          <Link to={isAuthenticated ? "/create-patient" : "/signup"}>
+          <Link to={isAuthenticated ? "/create-patient" : "/demologin"}>
             <button className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm md:text-base px-10 py-2 md:px-6 md:py-3 rounded-full font-medium transition-all">
               {isAuthenticated ? "Create Patient" : "Register"}
             </button>

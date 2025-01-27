@@ -10,6 +10,7 @@ import Patients from './components/Patients';
 import CreatePatient from './components/CreatePatient';
 import SearchResultsPage from './components/SearchResults';
 import LearnMore from './components/LearnMore';
+import DemoLogin from './components/DemoLogin';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/signin" element={<> <Header /> <SignIn /> </>} />
         <Route path="/signup" element={<> <Header /> <SignUp /> </>} />
         <Route path="/learnmore" element={<> <LearnMore /> </>} />
+        <Route path="/demologin" element={<> <Header /> <DemoLogin /> </>} />
       </Routes>
     </>
   );
