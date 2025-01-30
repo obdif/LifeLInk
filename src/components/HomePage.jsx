@@ -18,7 +18,8 @@ function HomePage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [fullName, setFullName] = useState('');
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(true); // Initial loading state
+  const [isLoading, setIsLoading] = useState(true);
+  const [file, setFile] = useState(null);
 
   // Simulate authentication check
   useEffect(() => {
@@ -37,16 +38,77 @@ function HomePage() {
   }, []);
 
 
+
   const handleFileChange = (event) => {
-    const file = event.target.files?.[0];
-    if (file) {
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile) {
+      setFile(selectedFile);
       const reader = new FileReader();
       reader.onload = () => {
         setFilePreview(reader.result);
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(selectedFile);
     }
   };
+
+
+  // ==================== HANDLE IMAGE SEARCH ====================
+
+  const handleImageSearch = async (e) => {
+    e.preventDefault();
+    setError('');
+    setIsLoading(false); 
+
+    if (!file) {
+      setError('Please upload an image to search.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('image', file, file.name);
+
+    try {
+      const response = await axios.post('https://lifelink-ordc.onrender.com/hospital/image', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+  
+      // console.log('Full Response:', response);
+      // console.log('Response Data:', response.data);
+      // console.log('Extracted patientId:', response.data?.patientId);
+
+      // console.log('API Full Response:', response);
+      // console.log('API Response Data:', response.data);
+
+      if (Array.isArray(response.data) && response.data.length > 0) {
+          const patientId = response.data[0]._id;  
+          console.log("Extracted patientId:", patientId);
+
+          toast.success('Patient found!');
+          navigate(`/patients/${patientId}`);
+      } else {
+          setError('No patient found with this image.');
+          toast.error('No match found.');
+      }
+      // if (response.data?.patientId) {
+      //   toast.success('Patient found!');
+      //   navigate(`/patients/${response.data.patientId}`); // Redirect to patient details page
+      // } else {
+      //   setError('No patient found with this image.');
+      //   toast.error('No match found.');
+      // }
+    } catch (err) {
+      console.error('Error:', err.response ? err.response.data : err.message); 
+      setError('Error searching patient. Please try again.');
+      toast.error('Error searching patient.');
+    }
+  };
+
+
+
+
+
+  
+  
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -142,7 +204,9 @@ function HomePage() {
           </div>
 
 
+
           {/* File Upload and Search Section */}
+
           <div className="relative md:order-2 order-1">
             <div className="aspect-square rounded-2xl bg-gradient-to-br from-indigo-100 to-blue-50 p-10 items-center justify-center">
               <form onSubmit={handleSearch} className="space-y-4">
@@ -165,6 +229,8 @@ function HomePage() {
                 {error && (
                   <p className="text-red-600 text-sm mt-2">{error}</p>
                 )}
+              </form>
+              <form onSubmit={handleImageSearch} className="space-y-4 mt-4">
 
                 <label
                   htmlFor="file-upload"
@@ -195,12 +261,22 @@ function HomePage() {
                   <button
                     type="button"
                     onClick={() => setFilePreview(null)}
-                    className="w-full mt-2 text-red-600 hover:bg-red-50 py-2 rounded-md transition-all"
+                    className="w-full mt-2 text-white bg-red-600 hover:bg-red-800 py-2 rounded-md transition-all"
                   >
                     Clear Image
                   </button>
                 )}
 
+                <button
+                  // onClick={handleImageSearch} 
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full bg-indigo-600 hover:bg-indigo-900 text-white py-3 rounded-lg disabled:bg-gray-400"
+                >
+                  {isLoading ? "Searching..." : "Search by Image"}
+                </button>
+
+                {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
                 <p className="text-sm flex mt-2 text-gray-600">
                   Supported formats: PNG, JPG & JPEG
                 </p>
