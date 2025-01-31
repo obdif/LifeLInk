@@ -18,7 +18,7 @@ function HomePage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [fullName, setFullName] = useState('');
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState(null);
 
   // Simulate authentication check
@@ -271,7 +271,7 @@ function HomePage() {
                   // onClick={handleImageSearch} 
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-indigo-600 hover:bg-indigo-900 text-white py-3 rounded-lg disabled:bg-gray-400"
+                  className={`${isLoading ? 'cursor-not-allowed' : 'hover:bg-indigo-900' } w-full bg-indigo-600  text-white py-3 rounded-lg disabled:bg-gray-400`}
                 >
                   {isLoading ? "Searching..." : "Search by Image"}
                 </button>

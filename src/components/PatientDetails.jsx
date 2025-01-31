@@ -90,7 +90,7 @@ const PatientDetails = () => {
           <div className="w-full md:w-1/3 lg:w-1/4">
             <div className="sticky top-24 border-4 rounded-xl border-indigo-800 p-3">
               <img
-                src={`https://lifelink-ordc.onrender.com${patient.image}`}
+                src={patient.image}
                 alt={`${patient.fullName || "Patient"}'s Profile`}
                 className="w-full aspect-square object-cover rounded-lg"
               />
