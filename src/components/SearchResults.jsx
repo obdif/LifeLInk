@@ -151,7 +151,7 @@ function SearchResultsPage() {
                         <td className="border px-4 py-2">{user.address}</td>
                         <td className="border px-4 py-2">
                           <img
-                            src={`https://lifelink-ordc.onrender.com${user.image}`}
+                            src={user.image}
                             alt={user.fullName}
                             className="w-12 h-12 rounded-full object-cover"
                           />

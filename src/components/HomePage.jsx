@@ -57,10 +57,11 @@ function HomePage() {
   const handleImageSearch = async (e) => {
     e.preventDefault();
     setError('');
-    setIsLoading(false); 
+    setIsLoading(true); 
 
     if (!file) {
       setError('Please upload an image to search.');
+      setIsLoading(false);
       return;
     }
 
@@ -100,8 +101,12 @@ function HomePage() {
       console.error('Error:', err.response ? err.response.data : err.message); 
       setError('Error searching patient. Please try again.');
       toast.error('Error searching patient.');
+    }finally {
+      setIsLoading(false);
     }
   };
+
+
 
 
 
@@ -134,16 +139,16 @@ function HomePage() {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-indigo-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
-        </div>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center bg-gray-100">
+  //       <div className="text-center">
+  //         <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-indigo-600 mx-auto mb-4"></div>
+  //         <p className="text-gray-600">Loading...</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
@@ -267,14 +272,14 @@ function HomePage() {
                   </button>
                 )}
 
-                <button
-                  // onClick={handleImageSearch} 
-                  type="submit"
-                  disabled={isLoading}
-                  className={`${isLoading ? 'cursor-not-allowed' : 'hover:bg-indigo-900' } w-full bg-indigo-600  text-white py-3 rounded-lg disabled:bg-gray-400`}
-                >
-                  {isLoading ? "Searching..." : "Search by Image"}
-                </button>
+<button
+  type="submit"
+  disabled={isLoading}
+  className={`w-full bg-indigo-600 text-white py-3 rounded-lg ${isLoading ? 'cursor-not-allowed bg-gray-400' : 'hover:bg-indigo-900'}`}
+>
+  {isLoading ? "Searching..." : "Search by Image"}
+</button>
+
 
                 {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
                 <p className="text-sm flex mt-2 text-gray-600">
