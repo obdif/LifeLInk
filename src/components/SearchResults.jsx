@@ -97,19 +97,20 @@ function SearchResultsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
       <ToastContainer />
-      <header className="border-b bg-white/50 backdrop-blur-sm fixed w-screen top-0 z-50">
-        <div className="container mx-full px-20 py-4 flex justify-between items-center">
+      <header className="border-b bg-white/50 backdrop-blur-sm fixed w-full top-0 z-50">
+        <div className="container mx-auto px-4 md:px-20 py-3 flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
             <Heart className="h-6 w-6 text-indigo-600" />
-            <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
+            <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparenttext-lg md:text-2xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
               LifeLink
             </span>
           </Link>
+
           <form onSubmit={handleSearch}>
             <div className="relative">
               <input
                 type="search"
-                className="w-full h-10 rounded-xl border-2 border-indigo-600 outline-0 p-6 pr-12"
+                className="w-full pl-2 h-8 rounded-xl border-2 border-indigo-600 outline-0 p-6 pr-12"
                 placeholder="Search Patient by name"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}

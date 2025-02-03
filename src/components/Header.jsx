@@ -10,7 +10,7 @@ export const Header = () => {
     <>
 
     <header className="border-b bg-white/50 backdrop-blur-sm fixed w-full top-0 z-50 ">
-      <div className="header container mx-auto px-4 md:px-20 py-3 flex items-center justify-between">
+      <div className=" container mx-auto px-4 md:px-20 py-3 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-2">
           <Heart className="h-5 w-5 md:h-6 md:w-6 text-indigo-600" />
