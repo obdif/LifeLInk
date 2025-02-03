@@ -154,7 +154,7 @@ function HomePage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
       <ToastContainer />
       <header className="border-b bg-white/50 backdrop-blur-sm fixed w-full top-0 z-50 " data-aos="fade-up">
-        <div className="container mx-auto px-4 md:px-20 py-3 flex items-center justify-between">
+        <div className=" container mx-auto px-4 md:px-20 py-3 flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <Heart className="h-5 w-5 md:h-6 md:w-6 text-indigo-600" />
@@ -291,13 +291,13 @@ function HomePage() {
         </div>
 
         {/* About Section */}
-        <section className="py-16 bg-white" data-aos="flip-left">
+        <section className="py-16 bg-white mt-8" data-aos="flip-left">
           <div className="container mx-auto px-6 lg:px-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
                 What is LifeLink?
               </h2>
-              <p className="text-lg text-gray-600 leading-relaxed">
+              <p className="text-sm text-gray-600  leading-relaxed">
                 LifeLink is a comprehensive hospital management and patient care platform.
                 Our mission is to bridge the gap between hospitals, healthcare professionals, and patients to ensure faster, more efficient emergency care and healthcare access.
                 LifeLink helps in streamlining medical processes like appointment bookings, diagnostic result sharing, and communication between hospitals for better outcomes.
